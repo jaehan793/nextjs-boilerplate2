@@ -11,15 +11,15 @@ const authConfig = {
   },
 }
 
-let publicAuthInstance: ReturnType<typeof NextAuth> | undefined
+let proxyAuthInstance: ReturnType<typeof NextAuth> | undefined
 let fullAuthInstance: ReturnType<typeof NextAuth> | undefined
 
-function getPublicAuthInstance() {
-  if (!publicAuthInstance) {
-    publicAuthInstance = NextAuth(authConfig)
+function getProxyAuthInstance() {
+  if (!proxyAuthInstance) {
+    proxyAuthInstance = NextAuth(authConfig)
   }
 
-  return publicAuthInstance
+  return proxyAuthInstance
 }
 
 async function getFullAuthInstance() {
@@ -36,17 +36,21 @@ async function getFullAuthInstance() {
 }
 
 export async function auth(...args: any[]) {
-  return getPublicAuthInstance().auth(...(args as [any]))
+  return (await getFullAuthInstance()).auth(...(args as [any]))
 }
 
 export async function signIn(...args: any[]) {
-  return getPublicAuthInstance().signIn(...(args as [any]))
+  return (await getFullAuthInstance()).signIn(...(args as [any]))
 }
 
 export async function signOut(...args: any[]) {
-  return getPublicAuthInstance().signOut(...(args as [any]))
+  return (await getFullAuthInstance()).signOut(...(args as [any]))
 }
 
 export async function getHandlers() {
   return (await getFullAuthInstance()).handlers
+}
+
+export async function proxy(...args: any[]) {
+  return getProxyAuthInstance().auth(...(args as [any]))
 }
