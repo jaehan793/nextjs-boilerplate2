@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, ArrowLeft } from "lucide-react"
+import { ArrowRight, ArrowLeft, PencilLine } from "lucide-react"
 
 import { getPosts } from "@/lib/posts"
 import { buttonVariants } from "@/components/ui/button"
@@ -47,6 +47,12 @@ export default async function PostsPage() {
           <p className="mx-auto mt-4 max-w-xl text-body text-[var(--muted-foreground)]">
             로그인한 사용자만 댓글을 작성할 수 있고, 작성자는 본인 댓글을 수정하거나 삭제할 수 있습니다.
           </p>
+          <div className="mt-6">
+            <Link href="/posts/new" className={cn(buttonVariants(), "gap-1.5")}>
+              <PencilLine className="size-4" />
+              게시글 작성
+            </Link>
+          </div>
         </div>
       </section>
 

@@ -18,3 +18,18 @@ export async function getPostById(postId: string) {
     where: { id: postId },
   })
 }
+
+export async function createPost({
+  title,
+  content,
+}: {
+  title: string
+  content: string
+}) {
+  return db.post.create({
+    data: {
+      title,
+      content,
+    },
+  })
+}
