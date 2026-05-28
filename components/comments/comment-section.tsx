@@ -5,7 +5,6 @@ import Link from "next/link"
 import { MessageSquareText } from "lucide-react"
 
 import { buttonVariants } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { CommentForm } from "@/components/comments/comment-form"
 import { CommentList } from "@/components/comments/comment-list"
 import type { CommentViewModel } from "@/components/comments/comment-item"
@@ -28,36 +27,35 @@ export function CommentSection({
   const loginHref = `/login?callbackUrl=${encodeURIComponent(`/posts/${postId}`)}`
 
   return (
-    <section className="space-y-4">
-      <div className="flex items-center gap-2">
-        <MessageSquareText className="size-5 text-muted-foreground" />
-        <h2 className="text-lg font-semibold">댓글 {comments.length}</h2>
+    <section className="space-y-6">
+      {/* Section Header */}
+      <div className="flex items-center gap-3">
+        <MessageSquareText className="size-5 text-[var(--muted-foreground)]" />
+        <h2 className="text-tagline text-[var(--ink)]">댓글 {comments.length}</h2>
       </div>
 
-      <Card className="border-border/70 bg-card/80 shadow-sm backdrop-blur">
-        <CardHeader className="pb-0">
-          <CardTitle className="text-base">한 줄 남기기</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-4">
-          {isLoggedIn ? (
-            <CommentForm
-              mode="create"
-              postId={postId}
-              onSuccess={() => setEditingCommentId(null)}
-            />
-          ) : (
-            <div className="flex flex-col items-start gap-4 rounded-2xl border border-dashed border-border bg-muted/30 p-5">
-              <p className="text-sm text-muted-foreground">
-                댓글은 로그인한 사용자만 작성할 수 있어요.
-              </p>
-              <Link href={loginHref} className={cn(buttonVariants(), "gap-1.5")}>
-                Google로 로그인
-              </Link>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      {/* Comment Form Card */}
+      <div className="rounded-[18px] border border-[var(--hairline)] bg-[var(--canvas)] p-6">
+        <h3 className="text-body-strong text-[var(--ink)] mb-4">한 줄 남기기</h3>
+        {isLoggedIn ? (
+          <CommentForm
+            mode="create"
+            postId={postId}
+            onSuccess={() => setEditingCommentId(null)}
+          />
+        ) : (
+          <div className="rounded-[18px] border border-dashed border-[var(--hairline)] bg-[var(--canvas-parchment)] p-6 text-center">
+            <p className="text-body text-[var(--muted-foreground)] mb-4">
+              댓글은 로그인한 사용자만 작성할 수 있어요.
+            </p>
+            <Link href={loginHref} className={cn(buttonVariants())}>
+              Google로 로그인
+            </Link>
+          </div>
+        )}
+      </div>
 
+      {/* Comment List */}
       <CommentList
         postId={postId}
         comments={comments}

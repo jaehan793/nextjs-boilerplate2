@@ -21,14 +21,16 @@ export function CommentList({
 }: CommentListProps) {
   if (comments.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-border bg-muted/30 px-4 py-8 text-center text-sm text-muted-foreground">
-        아직 댓글이 없어요. 가장 먼저 따뜻한 한 줄을 남겨보세요.
+      <div className="rounded-[18px] border border-dashed border-[var(--hairline)] bg-[var(--canvas)] px-6 py-10 text-center">
+        <p className="text-body text-[var(--muted-foreground)]">
+          아직 댓글이 없어요. 가장 먼저 따뜻한 한 줄을 남겨보세요.
+        </p>
       </div>
     )
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {comments.map((comment) => (
         <CommentItem
           key={comment.id}

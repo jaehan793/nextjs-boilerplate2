@@ -83,29 +83,35 @@ export function CommentItem({
   return (
     <article
       className={cn(
-        "rounded-2xl border border-border bg-background/80 p-4 shadow-sm backdrop-blur",
-        isEditing && "border-primary/30 bg-primary/5"
+        "rounded-[18px] border border-[var(--hairline)] bg-[var(--canvas)] p-5",
+        isEditing && "border-primary/40 bg-primary/5"
       )}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="space-y-1">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-2">
-            <p className="font-medium text-sm">{formatAuthor(comment)}</p>
-            <span className="text-xs text-muted-foreground">
+            <p className="text-body-strong text-[var(--ink)]">{formatAuthor(comment)}</p>
+            <span className="text-caption text-[var(--muted-foreground)]">
               {formatDate(comment.createdAt)}
             </span>
             {comment.updatedAt !== comment.createdAt ? (
-              <span className="text-xs text-muted-foreground">(수정됨)</span>
+              <span className="text-caption text-[var(--muted-foreground)]">(수정됨)</span>
             ) : null}
           </div>
-          <p className="whitespace-pre-wrap text-sm leading-6 text-foreground/90">
+          <p className="whitespace-pre-wrap text-body text-[var(--ink)]/90">
             {comment.content}
           </p>
         </div>
 
         {canEdit && !isEditing ? (
           <div className="flex shrink-0 items-center gap-1">
-            <Button type="button" size="icon-sm" variant="ghost" onClick={onStartEdit}>
+            <Button 
+              type="button" 
+              size="icon-sm" 
+              variant="ghost" 
+              onClick={onStartEdit}
+              className="text-[var(--muted-foreground)] hover:text-[var(--ink)]"
+            >
               <PencilLine className="size-4" />
             </Button>
             <form action={deleteAction}>
@@ -116,6 +122,7 @@ export function CommentItem({
                 size="icon-sm"
                 variant="ghost"
                 disabled={deletePending}
+                className="text-[var(--muted-foreground)] hover:text-destructive"
                 onClick={(event) => {
                   if (!window.confirm("이 댓글을 삭제할까요?")) {
                     event.preventDefault()
@@ -130,7 +137,7 @@ export function CommentItem({
       </div>
 
       {isEditing ? (
-        <div className="mt-4">
+        <div className="mt-5 pt-5 border-t border-[var(--hairline)]">
           <CommentForm
             key={comment.id}
             mode="edit"
@@ -144,7 +151,7 @@ export function CommentItem({
       ) : null}
 
       {deleteState.error ? (
-        <p className="mt-3 text-sm text-destructive">{deleteState.error}</p>
+        <p className="mt-3 text-caption text-destructive">{deleteState.error}</p>
       ) : null}
     </article>
   )

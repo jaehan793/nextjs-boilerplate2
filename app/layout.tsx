@@ -1,5 +1,6 @@
 // app/layout.tsx
 import type { Metadata } from "next"
+import "@fontsource-variable/inter"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -13,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">{children}</body>
+    <html lang="en" className="bg-background">
+      <body className="antialiased font-sans">{children}</body>
     </html>
   )
 }

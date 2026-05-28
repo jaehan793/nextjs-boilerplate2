@@ -1,8 +1,7 @@
 import Link from "next/link"
-import { ArrowRight, Coffee } from "lucide-react"
+import { ArrowRight, ArrowLeft } from "lucide-react"
 
 import { getPosts } from "@/lib/posts"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -12,43 +11,85 @@ export default async function PostsPage() {
   const posts = await getPosts()
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(146,64,14,0.12),_transparent_32%),linear-gradient(180deg,_rgba(255,248,240,1)_0%,_rgba(255,255,255,1)_100%)] px-4 py-12">
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-8">
-        <header className="space-y-4">
-          <p className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-900">
-            <Coffee className="size-3.5" />
-            게시글 댓글 데모
-          </p>
-          <div className="space-y-2">
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              커피잔 옆 메모처럼, 게시글에 댓글을 남겨보세요.
-            </h1>
-            <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
-              로그인한 사용자만 댓글을 작성할 수 있고, 작성자는 본인 댓글을 수정하거나 삭제할 수 있습니다.
-            </p>
+    <div className="min-h-screen">
+      {/* Global Nav - Apple Style */}
+      <nav className="sticky top-0 z-50 h-11 bg-[var(--surface-black)]">
+        <div className="mx-auto flex h-full max-w-[980px] items-center justify-between px-4">
+          <Link href="/" className="text-fine-print text-[var(--body-on-dark)] hover:text-white/80">
+            nextjs-boilerplate
+          </Link>
+          <div className="flex items-center gap-6">
+            <span className="text-fine-print text-[var(--body-on-dark)]">Posts</span>
           </div>
-        </header>
+        </div>
+      </nav>
 
-        <div className="grid gap-4">
-          {posts.map((post: (typeof posts)[number]) => (
-            <Card key={post.id} className="border-border/70 bg-card/85 shadow-sm backdrop-blur">
-              <CardHeader>
-                <CardDescription>{new Intl.DateTimeFormat("ko-KR", { dateStyle: "medium" }).format(post.createdAt)}</CardDescription>
-                <CardTitle>{post.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="line-clamp-2 text-sm leading-6 text-muted-foreground">
-                  {post.content}
-                </p>
-                <Link href={`/posts/${post.id}`} className={cn(buttonVariants(), "gap-1.5")}>
-                  댓글 보기
-                  <ArrowRight className="size-4" />
-                </Link>
-              </CardContent>
-            </Card>
-          ))}
+      {/* Sub Nav - Frosted Glass */}
+      <div className="sticky top-11 z-40 border-b border-[var(--hairline)] frosted-glass">
+        <div className="mx-auto flex h-[52px] max-w-[980px] items-center justify-between px-4">
+          <Link href="/" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "gap-1.5")}>
+            <ArrowLeft className="size-3.5" />
+            홈으로
+          </Link>
+          <h1 className="text-tagline text-[var(--ink)]">게시글</h1>
+          <div className="w-[72px]" /> {/* Spacer for alignment */}
         </div>
       </div>
-    </main>
+
+      {/* Hero Section */}
+      <section className="bg-[var(--canvas)] py-16 sm:py-20">
+        <div className="mx-auto max-w-[980px] px-4 text-center">
+          <h2 className="text-display-lg text-[var(--ink)] text-balance">
+            커피잔 옆 메모처럼,
+            <br className="sm:hidden" />
+            게시글에 댓글을 남겨보세요.
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-body text-[var(--muted-foreground)]">
+            로그인한 사용자만 댓글을 작성할 수 있고, 작성자는 본인 댓글을 수정하거나 삭제할 수 있습니다.
+          </p>
+        </div>
+      </section>
+
+      {/* Posts Grid - Parchment Tile */}
+      <section className="bg-[var(--canvas-parchment)] py-16 sm:py-20">
+        <div className="mx-auto max-w-[980px] px-4">
+          <div className="grid gap-5">
+            {posts.map((post: (typeof posts)[number]) => (
+              <article
+                key={post.id}
+                className="rounded-[18px] border border-[var(--hairline)] bg-[var(--canvas)] p-6 transition-shadow hover:shadow-product"
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="flex-1 space-y-3">
+                    <p className="text-caption text-[var(--muted-foreground)]">
+                      {new Intl.DateTimeFormat("ko-KR", { dateStyle: "medium" }).format(post.createdAt)}
+                    </p>
+                    <h3 className="text-body-strong text-[var(--ink)]">{post.title}</h3>
+                    <p className="line-clamp-2 text-body text-[var(--muted-foreground)]">
+                      {post.content}
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <Link href={`/posts/${post.id}`} className={cn(buttonVariants(), "gap-1.5")}>
+                      댓글 보기
+                      <ArrowRight className="size-4" />
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[var(--canvas-parchment)] py-12 border-t border-[var(--hairline)]">
+        <div className="mx-auto max-w-[980px] px-4 text-center">
+          <p className="text-fine-print text-[var(--ink-muted-48)]">
+            Built with Next.js 16, Tailwind CSS v4, and shadcn/ui
+          </p>
+        </div>
+      </footer>
+    </div>
   )
 }
