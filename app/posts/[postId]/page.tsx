@@ -21,7 +21,11 @@ type PageProps = {
 
 export default async function PostDetailPage({ params }: PageProps) {
   const { postId } = await params
-  const [session, post, comments] = await Promise.all([
+  const [session, post, comments]: [
+    Awaited<ReturnType<typeof auth>>,
+    Awaited<ReturnType<typeof getPostById>>,
+    Awaited<ReturnType<typeof getCommentsByPostId>>,
+  ] = await Promise.all([
     auth(),
     getPostById(postId),
     getCommentsByPostId(postId),
