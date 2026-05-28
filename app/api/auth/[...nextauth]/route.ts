@@ -1,4 +1,12 @@
 // app/api/auth/[...nextauth]/route.ts
-import { handlers } from "@/lib/auth"
+import { getHandlers } from "@/lib/auth"
 
-export const { GET, POST } = handlers
+export const runtime = "nodejs"
+
+export async function GET(...args: Parameters<Awaited<ReturnType<typeof getHandlers>>["GET"]>) {
+  return (await getHandlers()).GET(...args)
+}
+
+export async function POST(...args: Parameters<Awaited<ReturnType<typeof getHandlers>>["POST"]>) {
+  return (await getHandlers()).POST(...args)
+}
