@@ -27,21 +27,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const redirectTo = getCallbackUrl(callbackUrl)
 
   return (
-    <div className="min-h-screen">
-      {/* Global Nav - Apple Style */}
-      <nav className="sticky top-0 z-50 h-11 bg-[var(--surface-black)]">
-        <div className="mx-auto flex h-full max-w-[980px] items-center justify-between px-4">
-          <Link href="/" className="text-fine-print text-[var(--body-on-dark)] hover:text-white/80">
-            nextjs-boilerplate
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/posts" className="text-fine-print text-[var(--body-on-dark)] hover:text-white/80">
-              Posts
-            </Link>
-          </div>
-        </div>
-      </nav>
-
+    <div>
       {/* Login Content */}
       <section className="flex min-h-[calc(100vh-44px)] items-center justify-center bg-[var(--canvas-parchment)] px-4">
         <div className="w-full max-w-sm">

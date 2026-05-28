@@ -2,8 +2,8 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
-import { auth, signOut } from "@/lib/auth"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { auth } from "@/lib/auth"
+import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 export const dynamic = "force-dynamic"
@@ -13,37 +13,7 @@ export default async function Home() {
   const loginHref = `/login?callbackUrl=${encodeURIComponent("/")}`
 
   return (
-    <div className="min-h-screen">
-      {/* Global Nav - Apple Style */}
-      <nav className="sticky top-0 z-50 h-11 bg-[var(--surface-black)]">
-        <div className="mx-auto flex h-full max-w-[980px] items-center justify-between px-4">
-          <Link href="/" className="text-fine-print text-[var(--body-on-dark)] hover:text-white/80">
-            nextjs-boilerplate
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/posts" className="text-fine-print text-[var(--body-on-dark)] hover:text-white/80">
-              Posts
-            </Link>
-            {session ? (
-              <form
-                action={async () => {
-                  "use server"
-                  await signOut({ redirectTo: "/" })
-                }}
-              >
-                <Button type="submit" variant="ghost" size="xs" className="text-[var(--body-on-dark)] hover:bg-white/10">
-                  Sign out
-                </Button>
-              </form>
-            ) : (
-              <Link href={loginHref} className="text-fine-print text-[var(--body-on-dark)] hover:text-white/80">
-                Sign in
-              </Link>
-            )}
-          </div>
-        </div>
-      </nav>
-
+    <div className="min-h-[calc(100vh-44px)]">
       {/* Hero Section - Light Tile */}
       <section className="bg-[var(--canvas)] py-20 sm:py-24 lg:py-32">
         <div className="mx-auto max-w-[980px] px-4 text-center">

@@ -14,20 +14,7 @@ export default async function NewPostPage() {
   const loginHref = `/login?callbackUrl=${encodeURIComponent("/posts/new")}`
 
   return (
-    <div className="min-h-screen">
-      <nav className="sticky top-0 z-50 h-11 bg-[var(--surface-black)]">
-        <div className="mx-auto flex h-full max-w-[980px] items-center justify-between px-4">
-          <Link href="/" className="text-fine-print text-[var(--body-on-dark)] hover:text-white/80">
-            nextjs-boilerplate
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/posts" className="text-fine-print text-[var(--body-on-dark)] hover:text-white/80">
-              Posts
-            </Link>
-          </div>
-        </div>
-      </nav>
-
+    <div className="min-h-[calc(100vh-44px)]">
       <div className="sticky top-11 z-40 border-b border-[var(--hairline)] frosted-glass">
         <div className="mx-auto flex h-[52px] max-w-[980px] items-center justify-between px-4">
           <Link href="/posts" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "gap-1.5")}>

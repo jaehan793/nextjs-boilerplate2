@@ -11,19 +11,7 @@ export default async function PostsPage() {
   const posts = await getPosts()
 
   return (
-    <div className="min-h-screen">
-      {/* Global Nav - Apple Style */}
-      <nav className="sticky top-0 z-50 h-11 bg-[var(--surface-black)]">
-        <div className="mx-auto flex h-full max-w-[980px] items-center justify-between px-4">
-          <Link href="/" className="text-fine-print text-[var(--body-on-dark)] hover:text-white/80">
-            nextjs-boilerplate
-          </Link>
-          <div className="flex items-center gap-6">
-            <span className="text-fine-print text-[var(--body-on-dark)]">Posts</span>
-          </div>
-        </div>
-      </nav>
-
+    <div className="min-h-[calc(100vh-44px)]">
       {/* Sub Nav - Frosted Glass */}
       <div className="sticky top-11 z-40 border-b border-[var(--hairline)] frosted-glass">
         <div className="mx-auto flex h-[52px] max-w-[980px] items-center justify-between px-4">
