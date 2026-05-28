@@ -46,7 +46,8 @@ cp .env.example .env
 ### 5. Push database schema
 
 ```bash
-pnpm prisma db push
+corepack pnpm prisma db push
+corepack pnpm prisma db seed
 ```
 
 ### 6. Start dev server
@@ -57,6 +58,8 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) — click **Sign in with Google**.
 
+게시글 댓글 데모는 [http://localhost:3000/posts](http://localhost:3000/posts)에서 확인할 수 있습니다.
+
 ---
 
 ## Project Structure
@@ -65,6 +68,7 @@ Open [http://localhost:3000](http://localhost:3000) — click **Sign in with Goo
 ├── app/
 │   ├── layout.tsx              # Root layout (SessionProvider)
 │   ├── page.tsx                # Home — shows auth state
+│   ├── posts/                  # Demo post list + detail + comments
 │   └── (auth)/
 │       ├── login/page.tsx      # Google sign-in
 │       └── error/page.tsx      # Auth error display
