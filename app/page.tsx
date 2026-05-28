@@ -11,6 +11,7 @@ export const dynamic = "force-dynamic"
 
 export default async function Home() {
   const session = await auth()
+  const loginHref = `/login?callbackUrl=${encodeURIComponent("/")}`
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(120,53,15,0.12),_transparent_34%),linear-gradient(180deg,_rgba(255,251,247,1)_0%,_rgba(255,255,255,1)_100%)] px-4 py-10">
@@ -45,10 +46,7 @@ export default async function Home() {
                 </Button>
               </form>
             ) : (
-              <Link
-                href="/login"
-                className={cn(buttonVariants({ variant: "outline" }), "gap-1.5")}
-              >
+              <Link href={loginHref} className={cn(buttonVariants({ variant: "outline" }), "gap-1.5")}>
                 Google로 로그인
               </Link>
             )}

@@ -25,6 +25,7 @@ export function CommentSection({
   isLoggedIn,
 }: CommentSectionProps) {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null)
+  const loginHref = `/login?callbackUrl=${encodeURIComponent(`/posts/${postId}`)}`
 
   return (
     <section className="space-y-4">
@@ -49,7 +50,7 @@ export function CommentSection({
               <p className="text-sm text-muted-foreground">
                 댓글은 로그인한 사용자만 작성할 수 있어요.
               </p>
-              <Link href="/login" className={cn(buttonVariants(), "gap-1.5")}>
+              <Link href={loginHref} className={cn(buttonVariants(), "gap-1.5")}>
                 Google로 로그인
               </Link>
             </div>
