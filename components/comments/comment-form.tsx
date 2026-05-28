@@ -54,7 +54,7 @@ export function CommentForm({
   }, [onSuccess, state.version])
 
   return (
-    <form ref={formRef} action={action} className={cn("space-y-3", className)}>
+    <form ref={formRef} action={action} className={cn("space-y-4", className)}>
       <input type="hidden" name="postId" value={postId} />
       {commentId ? <input type="hidden" name="commentId" value={commentId} /> : null}
 
@@ -62,17 +62,17 @@ export function CommentForm({
         name="content"
         defaultValue={initialContent}
         placeholder="따뜻한 한 줄을 남겨주세요."
-        className="min-h-28 w-full rounded-2xl border border-border bg-background/90 px-4 py-3 text-sm leading-6 outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
+        className="min-h-28 w-full rounded-[18px] border border-[var(--hairline)] bg-[var(--canvas)] px-5 py-4 text-body text-[var(--ink)] outline-none transition-all placeholder:text-[var(--muted-foreground)] focus:border-primary focus:ring-2 focus:ring-primary/20"
         maxLength={500}
         required
       />
 
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-xs text-muted-foreground">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <p className="text-caption text-[var(--muted-foreground)]">
           로그인한 사용자만 댓글을 작성하고 수정할 수 있어요.
         </p>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {isEditMode ? (
             <Button type="button" variant="outline" onClick={onCancel}>
               취소
@@ -85,7 +85,7 @@ export function CommentForm({
       </div>
 
       {state.error ? (
-        <p className="text-sm text-destructive">{state.error}</p>
+        <p className="text-caption text-destructive">{state.error}</p>
       ) : null}
     </form>
   )

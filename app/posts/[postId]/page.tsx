@@ -1,12 +1,11 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Coffee } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 
 import { auth } from "@/lib/auth"
 import { getCommentsByPostId } from "@/lib/comments"
 import { getPostById } from "@/lib/posts"
 import { buttonVariants } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { CommentSection } from "@/components/comments/comment-section"
 import type { CommentViewModel } from "@/components/comments/comment-item"
 import { cn } from "@/lib/utils"
@@ -53,41 +52,75 @@ export default async function PostDetailPage({ params }: PageProps) {
   const currentUserId = session?.user?.id ?? null
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(120,53,15,0.12),_transparent_34%),linear-gradient(180deg,_rgba(255,251,247,1)_0%,_rgba(255,255,255,1)_100%)] px-4 py-10">
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-6">
-        <Link href="/posts" className={cn(buttonVariants({ variant: "ghost" }), "w-fit")}>
-          <ArrowLeft className="size-4" />
-          게시글 목록
-        </Link>
+    <div className="min-h-screen">
+      {/* Global Nav - Apple Style */}
+      <nav className="sticky top-0 z-50 h-11 bg-[var(--surface-black)]">
+        <div className="mx-auto flex h-full max-w-[980px] items-center justify-between px-4">
+          <Link href="/" className="text-fine-print text-[var(--body-on-dark)] hover:text-white/80">
+            nextjs-boilerplate
+          </Link>
+          <div className="flex items-center gap-6">
+            <Link href="/posts" className="text-fine-print text-[var(--body-on-dark)] hover:text-white/80">
+              Posts
+            </Link>
+          </div>
+        </div>
+      </nav>
 
-        <Card className="border-border/70 bg-card/85 shadow-sm backdrop-blur">
-          <CardHeader className="space-y-3 border-b border-border/60 pb-4">
-            <p className="inline-flex w-fit items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-900">
-              <Coffee className="size-3.5" />
-              sample post
-            </p>
-            <CardTitle className="text-2xl">{post.title}</CardTitle>
-            <p className="text-sm text-muted-foreground">
-              {new Intl.DateTimeFormat("ko-KR", {
-                dateStyle: "medium",
-                timeStyle: "short",
-              }).format(post.createdAt)}
-            </p>
-          </CardHeader>
-          <CardContent className="space-y-6 pt-6">
-            <p className="whitespace-pre-wrap text-sm leading-7 text-foreground/90">
-              {post.content}
-            </p>
+      {/* Sub Nav - Frosted Glass */}
+      <div className="sticky top-11 z-40 border-b border-[var(--hairline)] frosted-glass">
+        <div className="mx-auto flex h-[52px] max-w-[980px] items-center justify-between px-4">
+          <Link href="/posts" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "gap-1.5")}>
+            <ArrowLeft className="size-3.5" />
+            게시글 목록
+          </Link>
+          <span className="text-tagline text-[var(--ink)]">게시글</span>
+          <div className="w-[88px]" /> {/* Spacer for alignment */}
+        </div>
+      </div>
 
+      {/* Post Content - Light Tile */}
+      <section className="bg-[var(--canvas)] py-16 sm:py-20">
+        <div className="mx-auto max-w-[980px] px-4">
+          <article className="mx-auto max-w-[680px]">
+            <header className="mb-8 border-b border-[var(--hairline)] pb-8">
+              <p className="text-caption text-[var(--muted-foreground)]">
+                {new Intl.DateTimeFormat("ko-KR", {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                }).format(post.createdAt)}
+              </p>
+              <h1 className="mt-4 text-display-lg text-[var(--ink)]">{post.title}</h1>
+            </header>
+            <div className="text-body leading-[1.47] text-[var(--ink)]">
+              <p className="whitespace-pre-wrap">{post.content}</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      {/* Comments Section - Parchment Tile */}
+      <section className="bg-[var(--canvas-parchment)] py-16 sm:py-20">
+        <div className="mx-auto max-w-[980px] px-4">
+          <div className="mx-auto max-w-[680px]">
             <CommentSection
               postId={post.id}
               comments={serializedComments}
               currentUserId={currentUserId}
               isLoggedIn={Boolean(session)}
             />
-          </CardContent>
-        </Card>
-      </div>
-    </main>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[var(--canvas-parchment)] py-12 border-t border-[var(--hairline)]">
+        <div className="mx-auto max-w-[980px] px-4 text-center">
+          <p className="text-fine-print text-[var(--ink-muted-48)]">
+            Built with Next.js 16, Tailwind CSS v4, and shadcn/ui
+          </p>
+        </div>
+      </footer>
+    </div>
   )
 }
