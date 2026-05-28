@@ -1,5 +1,3 @@
-import type { Prisma } from "@prisma/client"
-
 import { db } from "@/lib/db"
 
 const commentUserSelect = {
@@ -9,13 +7,20 @@ const commentUserSelect = {
   image: true,
 } as const
 
-export type CommentWithUser = Prisma.CommentGetPayload<{
-  include: {
-    user: {
-      select: typeof commentUserSelect
-    }
+export type CommentWithUser = {
+  id: string
+  postId: string
+  userId: string
+  content: string
+  createdAt: Date
+  updatedAt: Date
+  user: {
+    id: string
+    name: string | null
+    email: string | null
+    image: string | null
   }
-}>
+}
 
 export async function getCommentsByPostId(postId: string): Promise<CommentWithUser[]> {
   return db.comment.findMany({
