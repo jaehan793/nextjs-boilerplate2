@@ -3,37 +3,50 @@ import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
-let authInstance: ReturnType<typeof NextAuth> | undefined
+const authConfig = {
+  providers: [Google],
+  pages: {
+    signIn: "/login",
+    error: "/error",
+  },
+}
 
-async function getAuthInstance() {
-  if (!authInstance) {
+let publicAuthInstance: ReturnType<typeof NextAuth> | undefined
+let fullAuthInstance: ReturnType<typeof NextAuth> | undefined
+
+function getPublicAuthInstance() {
+  if (!publicAuthInstance) {
+    publicAuthInstance = NextAuth(authConfig)
+  }
+
+  return publicAuthInstance
+}
+
+async function getFullAuthInstance() {
+  if (!fullAuthInstance) {
     const { db } = await import("@/lib/db")
 
-    authInstance = NextAuth({
+    fullAuthInstance = NextAuth({
       adapter: PrismaAdapter(db),
-      providers: [Google],
-      pages: {
-        signIn: "/login",
-        error: "/error",
-      },
+      ...authConfig,
     })
   }
 
-  return authInstance
+  return fullAuthInstance
 }
 
 export async function auth(...args: any[]) {
-  return (await getAuthInstance()).auth(...(args as [any]))
+  return getPublicAuthInstance().auth(...(args as [any]))
 }
 
 export async function signIn(...args: any[]) {
-  return (await getAuthInstance()).signIn(...(args as [any]))
+  return getPublicAuthInstance().signIn(...(args as [any]))
 }
 
 export async function signOut(...args: any[]) {
-  return (await getAuthInstance()).signOut(...(args as [any]))
+  return getPublicAuthInstance().signOut(...(args as [any]))
 }
 
 export async function getHandlers() {
-  return (await getAuthInstance()).handlers
+  return (await getFullAuthInstance()).handlers
 }
